@@ -114,7 +114,7 @@ KPI tracking and temporal distribution of data loss.
 
 <br>
 ![Executive Summary Dashboard](dashboard/Executive_summary.png)
-<br><br>
+<br>
 
 ### Page 2 — Operations Action Log
 Enables immediate remediation:
@@ -125,7 +125,7 @@ Enables immediate remediation:
 
 <br>
 ![Operations Actions log](dashboard/Operations_log.png)
-<br><br>
+<br>
 
 ## Key Findings & Risk Severity Framing
 
