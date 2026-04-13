@@ -19,11 +19,11 @@ Created a ground truth dataset from 3 years of sales data (56,046 records) and s
 * **Completeness Error:** 60 records dropped.
 * **Value Corruption:** 40 records with mutated quantities.
 
-👉 **[View the Python Anomaly Injection Script](migration_sabotage.py)**
+👉 **[View the Python Anomaly Injection Script](https://github.com/SaiRitwik11/Cloud-Migration-Reconciliation-Audit/blob/main/data_sabotage.py)**
 
 ### Phase 2: Forensic SQL Analysis (MySQL)
 
-👉 **[View the Master Forensic SQL Script](reconciliation_audit.sql)**
+👉 **[View the Master Forensic SQL Script](https://github.com/SaiRitwik11/Cloud-Migration-Reconciliation-Audit/blob/main/reconciliation_audit.sql)**
 
 **Test 1 — Completeness Check**
 ```sql
@@ -100,13 +100,13 @@ Built a 2-page, split-audience DataOps application to transition from analysis t
 ### Page 1 — Executive Audit Summary
 KPI tracking and temporal distribution of data loss.
 <br>
-<img src="Executive_summary.png" width="800" alt="Executive Summary Dashboard">
+<img src="Executive_summary.png?raw=true" width="800" alt="Executive Summary Dashboard">
 <br><br>
 
 ### Page 2 — Operations Action Log
 Enables the Data Engineering team to immediately execute `INSERT` scripts for the 60 missing records and `UPDATE` scripts for the 26 corrupted records using interactive slicers.
 <br>
-<img src="operations_log.png" width="800" alt="Operations Action Log">
+<img src="operations_log.png?raw=true" width="800" alt="Operations Action Log">
 <br>
 
 ## Key Findings & Risk Severity Framing
