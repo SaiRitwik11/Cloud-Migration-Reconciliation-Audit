@@ -60,7 +60,9 @@ JOIN cloud_sales c
     AND c.OrderLineItem = l.OrderLineItem
 WHERE c.OrderQuantity != l.OrderQuantity;
 ```
-> **Result:** 26 corrupted records identified (33 units variance).
+> **Result:** 26 corrupted records identified (33 units affected).
+
+> Note: SQL detects 26 of the 40 injected corruptions. The remaining 14 fall within deleted records, meaning they are removed before value validation — demonstrating how missing records can mask downstream corruption in real-world migrations.
 
 **Test 3 — Business Impact (CTE)**
 ```sql
