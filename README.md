@@ -25,7 +25,7 @@ Created a ground truth dataset from 3 years of sales data (56,046 records) and s
 
 ### Phase 2: Forensic SQL Analysis (MySQL)
 
-👉 **[View the Master Forensic SQL Script](https://github.com/SaiRitwik11/Cloud-Migration-Reconciliation-Audit/blob/main/reconciliation_audit.sql)**
+👉 | [View the Master Forensic SQL Script](./sql/reconciliation_audit.sql) |
 
 **Test 1 — Completeness Check**
 ```sql
@@ -102,7 +102,7 @@ Built a 2-page, split-audience DataOps application to transition from analysis t
 ### Page 1 — Executive Audit Summary
 KPI tracking and temporal distribution of data loss.
 <br>
-<img src="Executive_summary.png?raw=true" width="800" alt="Executive Summary Dashboard">
+![Executive Summary Dashboard](dashboard/Executive_summary.png)
 <br><br>
 
 ### Page 2 — Operations Action Log
