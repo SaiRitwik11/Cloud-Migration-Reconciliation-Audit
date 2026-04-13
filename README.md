@@ -108,7 +108,7 @@ KPI tracking and temporal distribution of data loss.
 ### Page 2 — Operations Action Log
 Enables the Data Engineering team to immediately execute `INSERT` scripts for the 60 missing records and `UPDATE` scripts for the 26 corrupted records using interactive slicers.
 <br>
-<img src="operations_log.png?raw=true" width="800" alt="Operations Action Log">
+![Operations Actions log](dashboard/operations_log.png)
 <br>
 
 ## Key Findings & Risk Severity Framing
