@@ -19,7 +19,9 @@ Created a ground truth dataset from 3 years of sales data (56,046 records) and s
 * **Completeness Error:** 60 records dropped.
 * **Value Corruption:** 40 records with mutated quantities.
 
-👉 **[View the Python Anomaly Injection Script](https://github.com/SaiRitwik11/Cloud-Migration-Reconciliation-Audit/blob/main/data_sabotage.py)**
+
+👉 | [View the Python Anomaly Injection Script](./python/migration_sabotage.py) |
+
 
 ### Phase 2: Forensic SQL Analysis (MySQL)
 
