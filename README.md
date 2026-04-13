@@ -113,6 +113,7 @@ Built a 2-page, split-audience DataOps application to transition from analysis t
 KPI tracking and temporal distribution of data loss.
 
 <br>
+
 ![Executive Summary Dashboard](dashboard/Executive_summary.png)
 <br>
 
@@ -124,6 +125,7 @@ Enables immediate remediation:
 - Prioritize undercounted records to prevent financial underreporting before close
 
 <br>
+
 ![Operations Actions log](dashboard/Operations_log.png)
 <br>
 
