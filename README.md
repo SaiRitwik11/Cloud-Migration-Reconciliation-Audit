@@ -1,7 +1,13 @@
 # Cloud Migration Data Reconciliation Audit
 
 ## Objective
-Validate data integrity during a legacy CRM to cloud data warehouse migration by identifying completeness failures and value corruption using forensic SQL analysis.
+Design a DataOps reconciliation system to detect and remediate data integrity failures during a legacy CRM to cloud warehouse migration.
+
+The system identifies:
+- Missing records (completeness failures)
+- Quantity discrepancies (value corruption)
+
+Using forensic SQL validation and operational dashboards.
 
 ## System Architecture & Audit Scope
 * **Source System:** Legacy CRM (Source of Truth)
@@ -9,15 +15,17 @@ Validate data integrity during a legacy CRM to cloud data warehouse migration by
 * **Migration Type:** Batch ETL 
 * **Primary Key:** `(OrderNumber, OrderLineItem)`
 * **Grain:** One row per order line item. 
-* **Scope Definition:** This audit prioritizes Completeness (dropped records) and Value Integrity (mutated quantities). Duplicate validation and schema drift checks are recommended as secondary extensions.
+* **Scope Definition:** This audit prioritizes Completeness (dropped records) and Value Integrity (accuracy of migrated quantities). Duplicate validation and schema drift checks are recommended as secondary extensions.
 * **Performance Note:** All forensic joins were executed on composite keys (`OrderNumber`, `OrderLineItem`) simulating indexed environments to ensure audit queries remain highly scalable for multi-million row datasets.
+  
+This audit design mirrors real-world data validation layers used in ETL pipelines before financial reporting systems.
 
 ## Methodology
 
 ### Phase 1: Controlled Anomaly Injection (Python)
 Created a ground truth dataset from 3 years of sales data (56,046 records) and simulated two real-world migration failures:
 * **Completeness Error:** 60 records dropped.
-* **Value Corruption:** 40 records with mutated quantities.
+* **Quantity Discrepancy:** 40 records with mutated quantities.
 
 
 👉 | [View the Python Anomaly Injection Script](./python/migration_sabotage.py) |
@@ -43,7 +51,7 @@ WHERE c.OrderNumber IS NULL;
 ```
 > **Result:** 60 orphan records identified (88 units completely lost).
 
-**Test 2 — Value Integrity Check**
+**Test 2 — Quantity Discrepancy Check**
 ```sql
 SELECT 
     l.OrderNumber,
@@ -96,7 +104,7 @@ Detection is only the first step. Based on the audit signatures, the following r
 | Issue Type | Root Cause Analysis | Remediation Strategy |
 | :--- | :--- | :--- |
 | **Missing Records** | API timeout/packet drop during peak batch load. | Implement exponential backoff retry logic + robust logging. |
-| **Value Corruption** | Data type mismatch/truncation during migration. | Enforce strict schema validation before warehouse ingestion. |
+| **Quantity Discrepancy** | Data type mismatch/truncation during migration. | Enforce strict schema validation before warehouse ingestion. |
 
 ## Operational Impact (Power BI Dashboard)
 Built a 2-page, split-audience DataOps application to transition from analysis to action.
@@ -108,7 +116,11 @@ KPI tracking and temporal distribution of data loss.
 <br><br>
 
 ### Page 2 — Operations Action Log
-Enables the Data Engineering team to immediately execute `INSERT` scripts for the 60 missing records and `UPDATE` scripts for the 26 corrupted records using interactive slicers.
+Enables immediate remediation:
+
+- Execute INSERT scripts to recover 60 missing records (88 units)
+- Execute UPDATE scripts to correct 26 corrupted records (33 units)
+- Prioritize undercounted records to prevent financial underreporting before close
 <br>
 ![Operations Actions log](dashboard/operations_log.png)
 <br>
@@ -120,8 +132,23 @@ Enables the Data Engineering team to immediately execute `INSERT` scripts for th
 | **Missing Records** | 60 orders | 88 units completely lost in transit. |
 | **Corrupted Records** | 26 orders | 33 units with quantity mutations. |
 | **Total Units at Risk** | 121 units | Material inventory/financial discrepancy requiring immediate correction. |
-| **Migration Integrity** | 99.89% | *Calculated as: 1 - (Units at Risk / Total Migrated).* |
-| **Severity Risk** | High | Despite a high integrity percentage, concentrated failure (45% in a 2-month window) indicates non-random, systemic risk requiring immediate intervention. |
+| **Record Completeness Score** | 99.89% | Measures record migration completeness *(excludes value variance).* |
+| **Value Integrity Score** | 99.95% | Measures correctness of migrated values (excludes missing records). |
+| **Severity Risk** | High | Despite a high integrity percentage, failures distributed across 19 months, with peaks in Jan 2022 and Q4 2021 — indicating systemic migration inconsistencies rather than a localized outage. |
+
+### Metric Definitions
+
+- **Record Completeness Score**
+  = (Total Records - Missing Records) / Total Records  
+  → Measures whether all legacy records were successfully migrated (does NOT account for value correctness)
+
+- **Value Integrity Score**
+  = (Matched Quantity Records / Total Matched Records)  
+  → Measures correctness of migrated values (excludes missing records)
+
+- **Total Units at Risk**
+  = Missing Units + Corrupted Units  
+  → Represents total financial/data exposure
 
 ## Live Deployment
 * 📊 **[Interact with the Live Power BI Dashboard](https://tinyurl.com/reconciliation-project-ritwik)**
