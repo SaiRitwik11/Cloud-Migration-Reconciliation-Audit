@@ -126,7 +126,7 @@ Enables immediate remediation:
 
 <br>
 
-![Operations Actions log](dashboard/Operations_log.png)
+![Operations Actions log](dashboard/operations_log.png)
 <br>
 
 ## Key Findings & Risk Severity Framing
