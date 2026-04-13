@@ -111,6 +111,7 @@ Built a 2-page, split-audience DataOps application to transition from analysis t
 
 ### Page 1 — Executive Audit Summary
 KPI tracking and temporal distribution of data loss.
+
 <br>
 ![Executive Summary Dashboard](dashboard/Executive_summary.png)
 <br><br>
@@ -121,9 +122,10 @@ Enables immediate remediation:
 - Execute INSERT scripts to recover 60 missing records (88 units)
 - Execute UPDATE scripts to correct 26 corrupted records (33 units)
 - Prioritize undercounted records to prevent financial underreporting before close
+
 <br>
-![Operations Actions log](dashboard/operations_log.png)
-<br>
+![Operations Actions log](dashboard/Operations_log.png)
+<br><br>
 
 ## Key Findings & Risk Severity Framing
 
