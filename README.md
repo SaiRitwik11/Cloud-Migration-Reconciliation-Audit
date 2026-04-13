@@ -19,7 +19,11 @@ Created a ground truth dataset from 3 years of sales data (56,046 records) and s
 * **Completeness Error:** 60 records dropped.
 * **Value Corruption:** 40 records with mutated quantities.
 
+👉 **[View the Python Anomaly Injection Script](migration_sabotage.py)**
+
 ### Phase 2: Forensic SQL Analysis (MySQL)
+
+👉 **[View the Master Forensic SQL Script](reconciliation_audit.sql)**
 
 **Test 1 — Completeness Check**
 ```sql
@@ -77,7 +81,7 @@ Corrupted_Units AS (
 SELECT 
     missing_quantity as Total_Missing_Units,
     corrupted_quantity as Total_Corrupted_Quantity,
-    (missing_quantity + corrupted_quantity) as Total_Units_at_risk
+    (missing_quantity + corrupted_quantity) as Total_Units_at_Risk
 FROM Missing_Units, Corrupted_Units;
 ```
 > **Result:** 121 total units exposed to risk.
@@ -91,9 +95,19 @@ Detection is only the first step. Based on the audit signatures, the following r
 | **Value Corruption** | Data type mismatch/truncation during migration. | Enforce strict schema validation before warehouse ingestion. |
 
 ## Operational Impact (Power BI Dashboard)
-Built a 2-page, split-audience DataOps application to transition from analysis to action:
-* **Page 1 — Executive Audit Summary:** KPI tracking and temporal distribution of data loss.
-* **Page 2 — Operations Action Log:** Enables the Data Engineering team to immediately execute `INSERT` scripts for the 60 missing records and `UPDATE` scripts for the 26 corrupted records using interactive slicers.
+Built a 2-page, split-audience DataOps application to transition from analysis to action.
+
+### Page 1 — Executive Audit Summary
+KPI tracking and temporal distribution of data loss.
+<br>
+<img src="Executive_summary.png" width="800" alt="Executive Summary Dashboard">
+<br><br>
+
+### Page 2 — Operations Action Log
+Enables the Data Engineering team to immediately execute `INSERT` scripts for the 60 missing records and `UPDATE` scripts for the 26 corrupted records using interactive slicers.
+<br>
+<img src="operations_log.png" width="800" alt="Operations Action Log">
+<br>
 
 ## Key Findings & Risk Severity Framing
 
@@ -105,12 +119,10 @@ Built a 2-page, split-audience DataOps application to transition from analysis t
 | **Migration Integrity** | 99.89% | *Calculated as: 1 - (Units at Risk / Total Migrated).* |
 | **Severity Risk** | High | Despite a high integrity percentage, concentrated failure (45% in a 2-month window) indicates non-random, systemic risk requiring immediate intervention. |
 
-## Tools Used
-* **Python:** Data preparation and controlled anomaly injection.
-* **MySQL:** Forensic database querying (`LEFT JOIN`, `CTEs`, `ABS()`, `CASE`).
-* **Power BI:** DAX measures, conditional formatting, split-audience UX design.
+## Live Deployment
+* 📊 **[Interact with the Live Power BI Dashboard](https://tinyurl.com/reconciliation-project-ritwik)**
 
 ## Author
 **Sai Ritwik Jannu** — Data Analyst | Hyderabad, India
-[LinkedIn](https://www.linkedin.com/in/sai-ritwik-dataanalyst/) | [Dashboard](https://tinyurl.com/reconciliation-project-ritwik)
+* 🔗 **[LinkedIn](https://www.linkedin.com/in/sai-ritwik-dataanalyst/)**
 ```
